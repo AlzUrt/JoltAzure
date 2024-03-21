@@ -4,12 +4,12 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/php
 
 trigger:
-- main
+- master
 
 pool: default
 
 variables:
-  phpVersion: 8.1
+  phpVersion: '8.1'
 
 steps:
 - script: |
@@ -23,5 +23,13 @@ steps:
 
 - script: composer install --no-interaction --prefer-dist
   displayName: 'composer install'
-- script: php artisan test
-  displayName: 'test artisan'
+
+- script: |
+    phpdbg -qrr ./vendor/bin/phpunit --coverage-clover clover.xml
+  displayName: 'Run PHPUnit tests and generate code coverage report'
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/clover.xml'
+    failIfCoverageEmpty: true
