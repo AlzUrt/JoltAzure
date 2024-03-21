@@ -23,14 +23,12 @@ steps:
 
 - script: composer install --no-interaction --prefer-dist
   displayName: 'composer install'
+- script: php artisan test
+  displayName: 'test artisan'
 
-- script: |
-    ./vendor/bin/phpunit --coverage-clover clover.xml
-  displayName: 'Run PHPUnit tests and generate code coverage report'
-
-- task: PublishCodeCoverageResults@1
+- script: sudo phpunit --coverage-clover coverage.xml
+- task: PublishCodeCoverageResults@2
   inputs:
-    codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/clover.xml'
-    reportDirectory: '$(System.DefaultWorkingDirectory)/coverage'
-    failIfCoverageEmpty: false
+    summaryFileLocation: 'coverage.xml'
+    failIfCoverageEmpty: true
+  displayName: 'Generate code coverage report'
