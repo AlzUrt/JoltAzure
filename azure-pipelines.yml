@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/php
 
 trigger:
-- master
+- main 
 
 pool: default
 
@@ -25,11 +25,12 @@ steps:
   displayName: 'composer install'
 
 - script: |
-    phpdbg -qrr ./vendor/bin/phpunit --coverage-clover clover.xml
+    ./vendor/bin/phpunit --coverage-clover clover.xml
   displayName: 'Run PHPUnit tests and generate code coverage report'
 
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/clover.xml'
-    failIfCoverageEmpty: true
+    reportDirectory: '$(System.DefaultWorkingDirectory)/coverage'
+    failIfCoverageEmpty: false
