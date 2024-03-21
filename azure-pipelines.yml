@@ -9,10 +9,9 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/php
 
 trigger:
-- master
+- main
 
-pool:
-  vmImage: ubuntu-latest
+pool: default
 
 variables:
   phpVersion: 8.^
