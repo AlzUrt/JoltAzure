@@ -1,8 +1,3 @@
-# PHP
-# Test and package your PHP project.
-# Add steps that run tests, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/php
-
 trigger:
 - main 
 
@@ -23,11 +18,10 @@ steps:
 
 - script: composer install --no-interaction --prefer-dist
   displayName: 'composer install'
-- script: php artisan test
-  displayName: 'test artisan'
-
 - script: composer update
   displayName: 'composer update'
+- script: php artisan test
+  displayName: 'test artisan'
 
 - script: phpunit --coverage-clover coverage.xml
 - task: PublishCodeCoverageResults@2
