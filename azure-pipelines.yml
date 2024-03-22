@@ -26,7 +26,7 @@ steps:
 - script: php artisan test
   displayName: 'test artisan'
 
-- script: sudo phpunit --coverage-clover coverage.xml
+- script: phpunit --coverage-clover coverage.xml
 - task: PublishCodeCoverageResults@2
   inputs:
     summaryFileLocation: 'coverage.xml'
