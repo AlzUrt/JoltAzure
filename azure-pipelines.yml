@@ -24,6 +24,9 @@ steps:
 - script: composer install --no-interaction --prefer-dist
   displayName: 'composer install'
 
+- script: composer update
+  displayName: 'composer update'
+
 - script: |
     ./vendor/bin/phpunit --coverage-clover clover.xml
   displayName: 'Run PHPUnit tests and generate code coverage report'
